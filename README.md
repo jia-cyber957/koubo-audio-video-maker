@@ -2,7 +2,7 @@
 
 > 一个面向中文口播的低成本 AI 配画面工作流：给一段音频，自动转写、切分、找素材、让 LLM 评分，再装配成可审片的视频时间线。
 
-docs/assets/download.png
+[![项目流程图](docs/assets/download.png)](docs/assets/download.png)
 
 ![Workflow](docs/assets/workflow.svg)
 
