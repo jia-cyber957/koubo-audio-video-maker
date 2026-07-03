@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Koubo Audio Video Maker workflow</title>
+  <desc id="desc">Audio to transcription, semantic shots, stock search, LLM scoring, resumable downloads, and assembly.</desc>
+  <rect width="1200" height="520" fill="#f7f7f2"/>
+  <rect x="42" y="42" width="1116" height="436" rx="24" fill="#ffffff" stroke="#222222" stroke-width="2"/>
+  <text x="80" y="102" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#161616">Koubo Audio Video Maker</text>
+  <text x="80" y="138" font-family="Arial, sans-serif" font-size="18" fill="#4d4d4d">Low-cost AI workflow for narration videos</text>
+
+  <g font-family="Arial, sans-serif" font-size="17" fill="#161616">
+    <rect x="80" y="205" width="140" height="78" rx="10" fill="#e8f1ff" stroke="#2457a6" stroke-width="2"/>
+    <text x="150" y="238" text-anchor="middle" font-weight="700">Audio</text>
+    <text x="150" y="262" text-anchor="middle">MP3 / WAV</text>
+
+    <rect x="270" y="205" width="150" height="78" rx="10" fill="#f0f8ea" stroke="#4c7d24" stroke-width="2"/>
+    <text x="345" y="238" text-anchor="middle" font-weight="700">Volcengine</text>
+    <text x="345" y="262" text-anchor="middle">word timeline</text>
+
+    <rect x="470" y="205" width="150" height="78" rx="10" fill="#fff2da" stroke="#9a6515" stroke-width="2"/>
+    <text x="545" y="238" text-anchor="middle" font-weight="700">AI shots</text>
+    <text x="545" y="262" text-anchor="middle">under 10s</text>
+
+    <rect x="670" y="205" width="150" height="78" rx="10" fill="#f5eefe" stroke="#7341a6" stroke-width="2"/>
+    <text x="745" y="238" text-anchor="middle" font-weight="700">Search</text>
+    <text x="745" y="262" text-anchor="middle">Pexels / Pixabay</text>
+
+    <rect x="870" y="205" width="150" height="78" rx="10" fill="#e9fbf6" stroke="#167a63" stroke-width="2"/>
+    <text x="945" y="238" text-anchor="middle" font-weight="700">LLM score</text>
+    <text x="945" y="262" text-anchor="middle">55+ / 75+</text>
+
+    <rect x="735" y="345" width="170" height="78" rx="10" fill="#fff0f0" stroke="#a53a3a" stroke-width="2"/>
+    <text x="820" y="378" text-anchor="middle" font-weight="700">Resumable</text>
+    <text x="820" y="402" text-anchor="middle">downloads</text>
+
+    <rect x="955" y="345" width="150" height="78" rx="10" fill="#eef1f3" stroke="#555555" stroke-width="2"/>
+    <text x="1030" y="378" text-anchor="middle" font-weight="700">Assembly</text>
+    <text x="1030" y="402" text-anchor="middle">MP4 成片</text>
+  </g>
+
+  <g stroke="#333333" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M220 244 H270"/>
+    <path d="M420 244 H470"/>
+    <path d="M620 244 H670"/>
+    <path d="M820 244 H870"/>
+    <path d="M945 283 V320 C945 338 920 350 905 363"/>
+    <path d="M905 384 H955"/>
+    <path d="M745 283 C720 325 720 365 735 384"/>
+  </g>
+
+  <g fill="#333333">
+    <path d="M266 238 L276 244 L266 250 Z"/>
+    <path d="M466 238 L476 244 L466 250 Z"/>
+    <path d="M666 238 L676 244 L666 250 Z"/>
+    <path d="M866 238 L876 244 L866 250 Z"/>
+    <path d="M951 378 L961 384 L951 390 Z"/>
+  </g>
+
+  <text x="80" y="456" font-family="Arial, sans-serif" font-size="16" fill="#555555">Transparent files, human-confirmed shots, LLM text scoring, and retry-safe downloads.</text>
+</svg>

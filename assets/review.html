@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>口播素材装配</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090b0f;--panel:#11141a;--panel2:#181c24;--line:#2a303b;--text:#f3f5f8;--muted:#949cab;--accent:#8c5cff;--blue:#4da3ff;--green:#43d68e;--warn:#ffc857;--bad:#ff6b7a}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;overflow:hidden;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,"Microsoft YaHei",sans-serif}button{font:inherit;color:inherit;cursor:pointer}.topbar{height:56px;display:flex;align-items:center;gap:16px;padding:0 18px;border-bottom:1px solid var(--line);background:#0b0d11}.brand{font-weight:800;font-size:17px}.title{flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.summary{color:var(--muted);font-size:12px}.primary,.ghost{border:1px solid var(--line);border-radius:9px;padding:8px 14px;background:#1b2029}.primary{background:#f1f2f4;color:#111;border-color:#f1f2f4;font-weight:700}.workspace{height:calc(100% - 56px);display:grid;grid-template-columns:280px minmax(520px,1fr) 360px}.sidebar,.inspector{min-width:0;background:var(--panel);overflow:auto}.sidebar{border-right:1px solid var(--line)}.inspector{border-left:1px solid var(--line)}.panel-title{position:sticky;top:0;z-index:2;padding:16px 18px;background:#11141af2;border-bottom:1px solid var(--line);font-weight:700}.shot-row{padding:14px 16px;border-bottom:1px solid #222733;cursor:pointer;transition:.15s}.shot-row:hover{background:#181d26}.shot-row.active{background:#202531;box-shadow:inset 3px 0 var(--accent)}.shot-number{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.shot-copy{margin-top:7px;color:#d9dde5;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.shot-time{color:var(--green)}.stage{min-width:0;display:grid;grid-template-rows:minmax(0,1fr) 172px;background:#0b0d12}.viewer-wrap{min-height:0;padding:24px 28px 12px;display:flex;flex-direction:column}.viewer{position:relative;flex:1;min-height:240px;display:grid;place-items:center;overflow:hidden;border-radius:10px;background:#050608;box-shadow:0 12px 40px #0008}.viewer video{width:100%;height:100%;object-fit:contain;background:#050608}.blank{position:absolute;inset:0;display:grid;place-items:center;color:#737b89;background:radial-gradient(circle,#171b23,#08090c)}.caption{position:absolute;left:8%;right:8%;bottom:24px;text-align:center;font-size:clamp(17px,2vw,28px);font-weight:800;text-shadow:0 2px 4px #000,0 0 10px #000;pointer-events:none}.controls{height:48px;display:flex;align-items:center;gap:12px}.play{width:38px;height:34px;border:0;background:transparent;font-size:20px}.time{min-width:104px;font-variant-numeric:tabular-nums}.seek{flex:1;accent-color:var(--accent)}.timeline{border-top:1px solid var(--line);padding:12px 14px 16px;overflow:hidden}.timeline-head{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:9px}.shot-strip{height:112px;display:flex;gap:10px;overflow-x:auto;scrollbar-color:#444 transparent}.shot-card{position:relative;flex:0 0 170px;height:96px;border:2px solid transparent;border-radius:9px;background:#181c24;padding:10px;text-align:left;overflow:hidden}.shot-card:hover{background:#202633}.shot-card.active{border-color:#fff;box-shadow:0 0 0 2px var(--accent)}.shot-card.disabled{background:#17191f;color:#8b929e}.shot-card .tag{display:block;font-size:12px;color:var(--muted)}.shot-card .strip-title{display:block;margin-top:8px;font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.shot-card .strip-meta{position:absolute;left:10px;right:10px;bottom:8px;display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted)}.shot-card .selected{color:var(--green)}.shot-card .empty-mark{color:var(--bad)}.inspector-head{padding:18px;border-bottom:1px solid var(--line)}.inspector-head h2{margin:0 0 7px;font-size:16px}.query{color:#76a9ff;min-height:22px}.actions{display:flex;gap:8px;margin-top:12px}.actions button{flex:1}.candidate-list{padding:12px}.candidate{position:relative;margin-bottom:12px;padding:8px;border:1px solid var(--line);border-radius:11px;background:#151922;cursor:pointer}.candidate:hover{border-color:#596274}.candidate.active{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}.candidate.pending{opacity:.72}.candidate video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:7px;background:#050608}.candidate-meta{display:flex;justify-content:space-between;gap:8px;margin-top:8px}.candidate-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.candidate-sub{color:var(--muted);font-size:12px}.using{position:absolute;top:14px;left:14px;padding:3px 7px;border-radius:5px;background:#168c5b;font-size:12px}.intent{color:#8ab8ff}.empty{padding:30px 18px;text-align:center;color:var(--muted)}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);padding:9px 14px;border-radius:8px;background:#f3f4f6;color:#111;box-shadow:0 8px 30px #0009;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1}
+    .render-backdrop{display:none;position:fixed;inset:0;z-index:40;background:#000a;place-items:center}.render-backdrop.open{display:grid}.render-dialog{width:min(560px,calc(100vw - 32px));padding:24px;border:1px solid var(--line);border-radius:14px;background:#151922;box-shadow:0 24px 80px #000}.render-dialog h2{margin:0 0 6px}.render-state{color:var(--muted);margin-bottom:16px}.progress-track{height:12px;overflow:hidden;border-radius:999px;background:#2b303b}.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#4c78ff,#3bd69a);transition:width .25s}.progress-meta{display:flex;justify-content:space-between;margin-top:9px;font-variant-numeric:tabular-nums}.render-path{margin-top:16px;padding:10px;border-radius:8px;background:#0c0e13;color:#b9c2d1;word-break:break-all}.render-error{display:none;max-height:160px;overflow:auto;margin-top:12px;padding:10px;border-radius:8px;background:#2a1116;color:#ffb4be;white-space:pre-wrap}.render-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.render-actions a{text-decoration:none}
+    @media(max-width:1050px){.workspace{grid-template-columns:220px minmax(420px,1fr) 310px}.viewer-wrap{padding:14px}.shot-card{flex-basis:145px}}@media(max-width:760px){body{overflow:auto}.workspace{height:auto;display:block}.sidebar{max-height:240px}.stage{height:620px}.inspector{border-left:0;border-top:1px solid var(--line)}.summary{display:none}}
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="brand">✦ 口播素材装配</div><div id="title" class="title">加载中...</div><div id="summary" class="summary"></div><button id="exportMp4" class="primary">导出 MP4</button></header>
+  <main class="workspace">
+    <aside class="sidebar"><div class="panel-title">文稿字幕</div><div id="shotList"></div></aside>
+    <section class="stage">
+      <div class="viewer-wrap">
+        <div class="viewer"><video id="preview" muted playsinline preload="metadata"></video><div id="blank" class="blank">当前时间没有视频画面</div><div id="caption" class="caption"></div></div>
+        <div class="controls"><button id="play" class="play" aria-label="播放">▶</button><span id="time" class="time">0:00 / 0:00</span><input id="seek" class="seek" type="range" min="0" max="1" value="0" step="0.01"><button id="mute" class="ghost">声音开</button><audio id="audio" preload="metadata" src="/api/audio"></audio></div>
+      </div>
+      <div class="timeline"><div class="timeline-head"><span>分镜时间线</span><span>轻量模式：只加载当前预览和右侧候选</span></div><div id="shotStrip" class="shot-strip"></div></div>
+    </section>
+    <aside class="inspector"><div id="inspector"></div></aside>
+  </main>
+  <div id="toast" class="toast"></div>
+  <div id="renderBackdrop" class="render-backdrop"><section class="render-dialog"><h2>合并导出 MP4</h2><div id="renderState" class="render-state">准备素材...</div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div><div class="progress-meta"><b id="progressPercent">0%</b><span id="progressTime">0:00 / 0:00</span></div><div id="renderPath" class="render-path" style="display:none"></div><pre id="renderError" class="render-error"></pre><div class="render-actions"><button id="closeRender" class="ghost">关闭</button><a id="downloadMp4" class="primary" href="/api/render/download" style="display:none">下载 MP4</a></div></section></div>
+  <script>
+    const $ = selector => document.querySelector(selector);
+    const audio = $('#audio');
+    const preview = $('#preview');
+    const preloader = document.createElement('video');
+    preloader.muted = true;
+    preloader.preload = 'metadata';
+
+    let project = null;
+    let activePointId = '';
+    let activeSlotKey = '';
+    let animation = 0;
+    let renderTimer = 0;
+    let saveVersion = 0;
+    let saveQueue = Promise.resolve();
+
+    const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+    const fmt = value => {
+      const seconds = Math.max(0, Number(value) || 0);
+      return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+    };
+    const videoUrl = (pointId, candidateId) => `/api/video?point=${encodeURIComponent(pointId)}&candidate=${encodeURIComponent(candidateId)}`;
+
+    async function api(url, options) {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      if (!response.ok || data.success === false) throw new Error(data.error || '请求失败');
+      return data;
+    }
+
+    function toast(message) {
+      const node = $('#toast');
+      node.textContent = message;
+      node.classList.add('show');
+      setTimeout(() => node.classList.remove('show'), 1600);
+    }
+
+    function pointData(id) { return project.data.points.find(point => String(point.point_id) === String(id)); }
+    function pointState(id) { return project.state.points.find(point => String(point.point_id) === String(id)); }
+    function candidate(point, id) { return point && point.candidates.find(item => String(item.candidate_id) === String(id)); }
+    function rawState() {
+      return {
+        schema_version: 1,
+        title: project.data.title,
+        points: project.state.points.map(point => ({
+          point_id: point.point_id,
+          disabled: point.disabled,
+          sequence: [...point.sequence],
+        })),
+      };
+    }
+
+    function currentPoint(time = audio.currentTime) {
+      return project.data.points.find(point => time >= point.start - 0.001 && time < point.end - 0.001)
+        || project.data.points.find(point => time < point.start)
+        || project.data.points.at(-1);
+    }
+
+    function currentSlot(time = audio.currentTime) {
+      for (const point of project.state.points) {
+        const slot = point.slots.find(item => time >= item.timeline_start - 0.001 && time < item.timeline_end - 0.001);
+        if (slot) return { point, slot };
+      }
+      return null;
+    }
+
+    function setPreviewBlank(message = '当前时间没有视频画面') {
+      if (activeSlotKey) {
+        preview.pause();
+        preview.removeAttribute('src');
+        preview.load();
+      }
+      activeSlotKey = '';
+      $('#blank').textContent = message;
+      $('#blank').style.display = 'grid';
+    }
+
+    function updateSummary() {
+      const uncovered = project.state.points.reduce((sum, point) => sum + point.uncovered_duration, 0);
+      $('#summary').textContent = `${project.data.points.length}个分镜 · 空白${uncovered.toFixed(1)}秒`;
+    }
+
+    function render() {
+      document.title = `${project.data.title} · 口播素材装配`;
+      $('#title').textContent = project.data.title;
+      updateSummary();
+      renderShotsOnce();
+      renderInspector();
+      syncPreview(true);
+    }
+
+    function renderShotsOnce() {
+      $('#shotList').innerHTML = project.data.points.map(point => `<article class="shot-row" data-id="${esc(point.point_id)}"><div class="shot-number"><span>分镜 ${esc(point.point_id)}</span><span class="shot-time">${fmt(point.start)}-${fmt(point.end)}</span></div><div class="shot-copy">${esc(point.source_text)}</div></article>`).join('');
+      $('#shotStrip').innerHTML = project.data.points.map(point => stripCardHtml(point)).join('');
+      document.querySelectorAll('.shot-row,.shot-card').forEach(node => { node.onclick = () => selectPoint(node.dataset.id, true); });
+      refreshAllPointCards();
+      renderSelection();
+    }
+
+    function stripCardHtml(point) {
+      return `<button class="shot-card" data-id="${esc(point.point_id)}"><span class="tag">分镜 ${esc(point.point_id)}</span><span class="strip-title">${esc(point.summary || point.source_text || '未命名分镜')}</span><span class="strip-meta"><span class="selected"></span><span class="duration">${Math.max(0, point.end - point.start).toFixed(1)}s</span></span></button>`;
+    }
+
+    function refreshAllPointCards() {
+      project.data.points.forEach(point => updatePointCard(point.point_id));
+    }
+
+    function updatePointCard(pointId) {
+      const state = pointState(pointId);
+      const card = document.querySelector(`.shot-card[data-id="${CSS.escape(String(pointId))}"]`);
+      if (!card || !state) return;
+      const label = card.querySelector('.selected');
+      const hasVideo = !state.disabled && state.sequence.length > 0;
+      card.classList.toggle('disabled', !hasVideo);
+      label.className = hasVideo ? 'selected' : 'empty-mark';
+      label.textContent = hasVideo ? `已选 ${state.sequence[0]}` : '留空';
+    }
+
+    function selectPoint(id, seek = false) {
+      const nextId = String(id);
+      const changed = nextId !== activePointId;
+      activePointId = nextId;
+      if (changed) renderInspector();
+      renderSelection();
+      if (seek) {
+        const point = pointData(id);
+        audio.currentTime = point.start;
+        syncPreview(true);
+      }
+    }
+
+    function renderSelection() {
+      document.querySelectorAll('[data-id].shot-row,[data-id].shot-card').forEach(node => {
+        node.classList.toggle('active', String(node.dataset.id) === String(activePointId));
+      });
+      const active = document.querySelector(`.shot-card[data-id="${CSS.escape(activePointId)}"]`);
+      active && active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    }
+
+    function renderInspector() {
+      const point = pointData(activePointId) || project.data.points[0];
+      if (!point) { $('#inspector').innerHTML = '<div class="empty">没有分镜</div>'; return; }
+      activePointId = String(point.point_id);
+      const state = pointState(point.point_id);
+      const selected = state.sequence[0] || '';
+      $('#inspector').innerHTML = `<div class="inspector-head"><h2>分镜 ${esc(point.point_id)}</h2><div>${esc(point.source_text)}</div><div class="query">${esc(point.summary || point.visual_direction || '选择最适合当前文稿的画面')}</div><div class="actions"><button id="reset" class="ghost">恢复最高分</button><button id="clear" class="ghost">当前留空</button></div></div><div class="candidate-list">${point.candidates.length ? point.candidates.map(item => candidateHtml(point, item, selected)).join('') : '<div class="empty">这个分镜没有候选视频，可以留空导出。</div>'}</div>`;
+      $('#reset').onclick = () => replacePoint(point.point_id, point.defaultSequence[0] || '');
+      $('#clear').onclick = () => replacePoint(point.point_id, '');
+      document.querySelectorAll('.candidate').forEach(card => {
+        card.onclick = () => replacePoint(point.point_id, card.dataset.id);
+      });
+    }
+
+    function candidateHtml(point, item, selected) {
+      const active = String(item.candidate_id) === String(selected);
+      return `<article class="candidate ${active ? 'active' : ''}" data-id="${esc(item.candidate_id)}"><video muted playsinline preload="none" src="${videoUrl(point.point_id, item.candidate_id)}#t=0.1"></video>${active ? '<span class="using">✓ 使用中</span>' : ''}<div class="candidate-meta"><b class="candidate-title">${esc(item.title || item.candidate_id)}</b><b>${Number(item.score) || 0}分</b></div><div class="candidate-sub"><span class="intent">${esc(intentName(item.visual_intent))}</span> · ${esc(item.source || '本地素材')} · ${Number(item.duration || 0).toFixed(1)}s</div></article>`;
+    }
+
+    function intentName(value) {
+      return ({ direct: '直接画面', mixed: '综合画面', associative: '情境联想', metaphorical: '视觉意象' })[value] || '候选画面';
+    }
+
+    function replacePoint(pointId, candidateId) {
+      const state = pointState(pointId);
+      const previous = { disabled: state.disabled, sequence: [...state.sequence] };
+      state.disabled = !candidateId;
+      state.sequence = candidateId ? [candidateId] : [];
+      updatePointCard(pointId);
+      renderInspector();
+      updateSummary();
+      activeSlotKey = '';
+      setPreviewBlank(candidateId ? '已切换，正在加载预览...' : '当前分镜已留空');
+      const version = ++saveVersion;
+      const snapshot = rawState();
+      saveQueue = saveQueue
+        .then(() => api('/api/state', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(snapshot) }))
+        .then(result => {
+          if (version !== saveVersion) return;
+          project.state = result.state;
+          updatePointCard(pointId);
+          renderInspector();
+          updateSummary();
+          syncPreview(true);
+          toast(candidateId ? '分镜已替换' : '分镜已留空');
+        })
+        .catch(error => {
+          state.disabled = previous.disabled;
+          state.sequence = previous.sequence;
+          updatePointCard(pointId);
+          renderInspector();
+          updateSummary();
+          toast(error.message);
+        });
+    }
+
+    function warmNextMetadata(time = audio.currentTime) {
+      const next = currentSlot(time + 1.5) || currentSlot(time + 4);
+      if (!next) return;
+      const src = videoUrl(next.point.point_id, next.slot.candidate_id);
+      if (preloader.dataset.src !== src) {
+        preloader.dataset.src = src;
+        preloader.src = src;
+      }
+    }
+
+    function syncPreview(force = false) {
+      if (!project) return;
+      const time = audio.currentTime;
+      const point = currentPoint(time);
+      if (point && String(point.point_id) !== String(activePointId)) {
+        activePointId = String(point.point_id);
+        renderInspector();
+        renderSelection();
+      }
+      $('#caption').textContent = point && time >= point.start - 0.05 && time <= point.end + 0.05 ? point.source_text : '';
+      const found = currentSlot(time);
+      if (!found) {
+        setPreviewBlank();
+        updateControls();
+        return;
+      }
+      const key = `${found.point.point_id}:${found.slot.candidate_id}:${found.slot.timeline_start}`;
+      const target = Math.max(0, found.slot.source_start + time - found.slot.timeline_start);
+      if (force || key !== activeSlotKey) {
+        activeSlotKey = key;
+        $('#blank').textContent = '正在加载预览...';
+        $('#blank').style.display = 'grid';
+        preview.preload = 'auto';
+        preview.src = videoUrl(found.point.point_id, found.slot.candidate_id);
+        preview.onloadedmetadata = () => {
+          preview.currentTime = Math.min(target, Math.max(0, preview.duration - 0.05));
+        };
+        preview.oncanplay = () => {
+          $('#blank').style.display = 'none';
+          if (!audio.paused) preview.play().catch(() => {});
+        };
+      } else if (Number.isFinite(preview.duration) && Math.abs(preview.currentTime - target) > 0.3) {
+        preview.currentTime = Math.min(target, Math.max(0, preview.duration - 0.05));
+      }
+      if (!audio.paused && preview.paused) preview.play().catch(() => {});
+      if (audio.paused && !preview.paused) preview.pause();
+      warmNextMetadata(time);
+      updateControls();
+    }
+
+    function updateControls() {
+      const duration = Number(project?.data.audio.duration) || audio.duration || 0;
+      $('#seek').max = duration;
+      $('#seek').value = Math.min(audio.currentTime, duration);
+      $('#time').textContent = `${fmt(audio.currentTime)} / ${fmt(duration)}`;
+      $('#play').textContent = audio.paused ? '▶' : '❚❚';
+    }
+
+    function tick() {
+      syncPreview();
+      if (!audio.paused) animation = requestAnimationFrame(tick);
+    }
+
+    $('#play').onclick = () => audio.paused ? audio.play() : audio.pause();
+    audio.onplay = () => { preview.play().catch(() => {}); cancelAnimationFrame(animation); tick(); };
+    audio.onpause = () => { preview.pause(); cancelAnimationFrame(animation); updateControls(); };
+    audio.onended = audio.onpause;
+    audio.ontimeupdate = () => { if (audio.paused) syncPreview(); };
+    $('#seek').oninput = event => { audio.currentTime = Number(event.target.value); syncPreview(true); };
+    $('#mute').onclick = () => { audio.muted = !audio.muted; $('#mute').textContent = audio.muted ? '声音关' : '声音开'; };
+
+    function renderStatus(status) {
+      const state = status?.state || 'idle';
+      const total = Number(status?.total_seconds) || 0;
+      const done = Number(status?.processed_seconds) || 0;
+      const percent = state === 'completed' ? 100 : Math.max(0, Math.min(99.9, Number(status?.percent) || 0));
+      $('#progressBar').style.width = `${percent}%`;
+      $('#progressPercent').textContent = `${percent.toFixed(state === 'completed' ? 0 : 1)}%`;
+      $('#progressTime').textContent = `${fmt(done)} / ${fmt(total)}`;
+      $('#renderState').textContent = state === 'preparing' ? '准备素材...' : state === 'rendering' ? '正在合成画面和旁白...' : state === 'completed' ? 'MP4合成完成' : state === 'failed' ? 'MP4合成失败' : '等待开始';
+      $('#renderPath').style.display = status?.output_path ? 'block' : 'none';
+      $('#renderPath').textContent = status?.output_path || '';
+      $('#downloadMp4').style.display = state === 'completed' ? 'inline-block' : 'none';
+      $('#renderError').style.display = state === 'failed' ? 'block' : 'none';
+      $('#renderError').textContent = state === 'failed' ? [status.error, ...(status.log_tail || []).slice(-12)].filter(Boolean).join('\n') : '';
+      return state;
+    }
+
+    async function pollRender() {
+      clearTimeout(renderTimer);
+      try {
+        const result = await api('/api/render/status');
+        const state = renderStatus(result.status);
+        if (state === 'preparing' || state === 'rendering') renderTimer = setTimeout(pollRender, 800);
+      } catch (error) {
+        $('#renderError').style.display = 'block';
+        $('#renderError').textContent = error.message;
+      }
+    }
+
+    function openRender(status) {
+      $('#renderBackdrop').classList.add('open');
+      renderStatus(status);
+      pollRender();
+    }
+
+    $('#closeRender').onclick = () => { $('#renderBackdrop').classList.remove('open'); clearTimeout(renderTimer); };
+    $('#exportMp4').onclick = async () => {
+      $('#renderBackdrop').classList.add('open');
+      renderStatus({ state: 'preparing', percent: 0, processed_seconds: 0, total_seconds: project.data.audio.duration });
+      try {
+        const result = await api('/api/render', { method: 'POST' });
+        openRender(result.status);
+      } catch (error) {
+        renderStatus({ state: 'failed', error: error.message, log_tail: [], total_seconds: project.data.audio.duration });
+      }
+    };
+
+    api('/api/project')
+      .then(data => {
+        project = data;
+        activePointId = String(project.data.points[0]?.point_id || '');
+        audio.onloadedmetadata = updateControls;
+        render();
+        if (['preparing', 'rendering'].includes(project.render?.state)) openRender(project.render);
+      })
+      .catch(error => { $('#shotList').innerHTML = `<div class="empty">${esc(error.message)}</div>`; });
+  </script>
+</body>
+</html>

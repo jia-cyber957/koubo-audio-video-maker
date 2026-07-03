@@ -1,0 +1,4 @@
+interface:
+  display_name: "单音频口播成片"
+  short_description: "输入一个音频，火山转写、语义分镜、找视频并装配成片"
+  default_prompt: "Use $koubo-audio-video-maker with my narration audio file to transcribe with Volcengine, create timed semantic shots, search and LLM-score stock videos, then assemble the narration timeline and export an MP4 video."
